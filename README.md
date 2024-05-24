@@ -128,11 +128,9 @@ SQLite is the default database. It is suitable if you don't a lot of concurrent 
 
 While `urls.py` can handle all the URL mappings, it's more common to route these mappings to the corresponding application.
 
-The URL mappings are managed through the  variable, which is a Python list of 
+The URL mappings are managed through the `urlpatterns` variable, which is a list of `path()` functions.
 
-The `path()` functions are managed through `urlpatterns`.
-
-Add a new list item to the `urlpatterns` list by adding a `path()` that forwards requests to the module with the relative URL.
+`path()` forwards requests to the module with the relative URL.
 
 `RedirectView` redirects the root URL of the site.
 
@@ -140,7 +138,7 @@ Django does not serve static files by default. Serving CSS, JavaScript, and imag
 
 In the catalog folder, create `urls.py` and define the imported `urlpatterns`. Add patterns here as the application grows.
 
-Before we do that, we should first run a database migration. This updates our database (to include any models in our installed applications) and removes some build warnings.
+Before doing this, first run a database migration to update the database.
 
 ## Running database migrations
 
