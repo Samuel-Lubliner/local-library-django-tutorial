@@ -71,4 +71,3 @@ Declaring inlines
 - `TabularInline` (horizontal layout) https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline
 
 - `StackedInline` (vertical layout, like the default model layout) https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.StackedInline
-
