@@ -47,3 +47,9 @@ Find a reference of the admin site in the docs: https://docs.djangoproject.com/e
 ## Register a ModelAdmin class
 
 Comment out the original registrations. Then Define a `ModelAdmin class` and register it with the model. See: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#modeladmin-objects
+
+## Configure list views
+
+Use `list_display` to add additional fields to the view.
+
+See more at https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display
