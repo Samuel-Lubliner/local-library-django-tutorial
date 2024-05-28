@@ -53,3 +53,7 @@ Comment out the original registrations. Then Define a `ModelAdmin class` and reg
 Use `list_display` to add additional fields to the view.
 
 See more at https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display
+
+## Add list filters
+
+To filter which items are displayed, list fields in the `list_filter` attribute.
