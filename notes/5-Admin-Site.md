@@ -61,3 +61,14 @@ To filter which items are displayed, list fields in the `list_filter` attribute.
 ## Sectioning the detail view
 
 Add sections: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
+
+## Inline editing of associated records
+
+https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.inlines
+
+Declaring inlines
+
+- `TabularInline` (horizontal layout) https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.TabularInline
+
+- `StackedInline` (vertical layout, like the default model layout) https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.StackedInline
+
