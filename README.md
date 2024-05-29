@@ -9,3 +9,4 @@ This is a companion repository to [Mozilla's Django Tutorial](https://developer.
 - [Using Models](notes/3-Using-Models.md)
 - [Sample Data](notes/4-Sample-Data.md)
 - [Admin Site](notes/5-Admin-Site.md)
+- [Homepage](notes/6-Homepage.md)
