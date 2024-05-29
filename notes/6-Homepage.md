@@ -54,3 +54,68 @@ The view function 'index'
 
 The `context` variable is a dictionary, containing the placeholder data
 
+## Template
+
+- A template defines the structure a file
+- Such as an HTML page
+- Use placeholders for content
+
+In the index view from 'locallibrary/catalog/views.py', the `render()` function will expect to find `/django-locallibrary-tutorial/catalog/templates/index.html` or return an error.
+
+## Extending templates
+
+Declare a base template and extend it to replace different parts for each specific page.
+
+Template tags
+- loop through lists
+- conditional operations
+
+Template syntax
+- Reference variables from the view
+- Use filters to format variables
+
+When defining a template specify the base template using the extends template tag. Then declare sections from the template to be replaced.
+
+Our base template is `/django-locallibrary-tutorial/catalog/templates/base_generic.html`
+
+The base template references `/django-locallibrary-tutorial/catalog/static/css/styles.css` that provides additional styling.
+
+## The index template
+
+`/django-locallibrary-tutorial/catalog/templates/index.html` extends the base template on the first line, and then replaces the default content block for the template.
+
+Template variables
+
+- Placeholders for the information from the view
+- Variables are enclosed with double brace handlebars
+
+Variables are named with the keys passed into the context dictionary in the `render()` function of the view. When the template is rendered, variables will be replaced with values.
+
+## Referencing static files in templates
+
+https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+Static resources include JavaScript, CSS, and images. You can specify the location in your templates relative to the `STATIC_URL` global setting. The default value of `STATIC_URL` is set to `'/static/'`. You can change it and host resources on a content delivery network.
+
+In a template, first call the load template tag specifying "static" to add the template library. Then use the static template tag and specify the relative URL to the required file.
+
+## Linking to URLs
+
+The base template uses the url template tag.
+
+This tag
+
+- accepts the name of a `path()` function called in `urls.py`
+- accepts the values for arguments the associated view will receive
+- returns a URL used to link to the resource
+
+## Configuring where to find the templates
+
+https://docs.djangoproject.com/en/5.0/topics/templates/
+
+Django searches for templates specified in the `TEMPLATES` object in the settings
+
+In `settings.py` `'APP_DIRS': True` tells Django to search for templates in a subdirectory of each application in the project, named "templates".
+
+Specify specific locations for Django to search for directories using `'DIRS': []`.
+
