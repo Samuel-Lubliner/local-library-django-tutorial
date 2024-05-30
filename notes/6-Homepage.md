@@ -119,3 +119,17 @@ In `settings.py` `'APP_DIRS': True` tells Django to search for templates in a su
 
 Specify specific locations for Django to search for directories using `'DIRS': []`.
 
+## Challenge
+
+1. The LocalLibrary base template includes a title block. Override this block in the index template and create a new title for the page.
+
+2. Modify the view to generate counts for genres and books that contain a particular word (case insensitive), and pass the results to the context. You accomplish this in a similar way to creating and using num_books and num_instances_available. Then update the index template to include these variables.
+
+See:
+
+[Writing your first Django app, part 3: Views and Templates](https://docs.djangoproject.com/en/5.0/intro/tutorial03/)
+[URL dispatcher](https://docs.djangoproject.com/en/5.0/topics/http/urls/)
+[View functions](https://docs.djangoproject.com/en/5.0/topics/http/views/)
+[Templates](https://docs.djangoproject.com/en/5.0/topics/templates/)
+[Managing static files](https://docs.djangoproject.com/en/5.0/howto/static-files/)
+[Django shortcut functions](https://docs.djangoproject.com/en/5.0/topics/http/shortcuts/#django.shortcuts.render)
