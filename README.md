@@ -10,3 +10,4 @@ This is a companion repository to [Mozilla's Django Tutorial](https://developer.
 - [Sample Data](notes/4-Sample-Data.md)
 - [Admin Site](notes/5-Admin-Site.md)
 - [Homepage](notes/6-Homepage.md)
+- [Generic list and detail views](notes/7-Generic-list-and-detail-views.md)
