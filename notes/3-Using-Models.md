@@ -7,8 +7,7 @@ From: [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/
 - Python objects
 - Define the data structure
 - Independent from the database schema
-- Facilitate communication between Django and the database via
-Object-Relational Mapper
+- Facilitate communication between Django and the database via Object-Relational Mapper
 
 ## Designing Models
 
@@ -20,22 +19,22 @@ Consider the relationships between objects. Relationships include:
 - one to many (ForeignKey)
 - many to many (ManyToManyField)
 
-Multiplicities: the maximum and minimum number of each model that may be present in the relationship.
+Multiplicities define the maximum and minimum number of each model that may be present in the relationship.
 
 ## Model definition
 
 Models:
 
 - Defined in `models.py`
-- Implemented as subclasses of `django.db.models.Model`
+- Extend `django.db.models.Model` class
 - Can include fields, methods and metadata
 
 ## Fields
 
-- A model has fields that represent columns in a database table.
+- Fields in a model represent columns in a database table.
 - Each record (row) in the table contains values for these fields.
-- Field types are assigned with classes, which determine the type of record that is used to store the data in the database.
-- Field types can be used for HTML form validation.
+- Field types are designated using specific classes that define the type of data stored.
+- Field types can also be used for HTML form validation.
 
 ## Field Arguments
 
@@ -74,11 +73,11 @@ Models:
 
 ### `__str__()`
 - Python class method
-- Returns a human-readable string representation of the object
+- Provides a readable string representation of the object
 - The string represents individual records
 
 ### `get_absolute_url()`
-- Returns a URL for displaying individual model records
+- Generates a URL to view individual records of the model
 
 ## Model management
 
@@ -119,28 +118,29 @@ At the top of `/django-locallibrary-tutorial/catalog/models.py`, the boilerplate
 ## Book model
 
 - Represents all the general information about an available book
-- `CharField` to represent the book's title and isbn.
-- unique as true ensures all books have a unique ISBN
-- title is not set to be unique, because it is possible for different books to have the same name.
+- `CharField` is used for the book's title and isbn.
+- `unique` as `true` ensures all books have a unique ISBN
+- `title` is not set to be unique, because it is possible for different books to have the same name.
 - `TextField` for longer summary
 - `ManyToManyField` a book can have multiple genres and a genre can have many books
 
 ## In both field types:
 
-- The related model class is declared as the first unnamed parameter
-  - using either the model class
-  - or a string containing the name of the related model
-- Use the name of the model as a string if the associated class has not yet been defined in this file before it is referenced
-- `null=True` allows the database to store a `Null` value if no author is selected
-- `on_delete=models.RESTRICT` prevents the book's associated author being deleted if it is referenced by any book
+- The first unnamed parameter should specify the related model class
+  - either directly by the model class
+  - or as a string with the name of the related model
+- If the associated class is not yet defined, use the model's name as a string in this file
+- Setting `null=True` permits the database to store `Null` if no author is selected
+- Using `on_delete=models.RESTRICT` prevents the deletion of the book's author if it is referenced by any book
 
 ## Warning:
 
-- By default `on_delete=models.CASCADE`
-- If the author was deleted, this book would be deleted too! - - Use `RESTRICT` or `PROTECT` to prevent the author being deleted while any book uses it 
-- or `SET_NULL` to set the book's author to `Null` if the record is deleted
-- `__str__()` uses the book's title field to represent a Book record
-- `get_absolute_url()` returns a URL used to access a detail record
+- The default behavior is `on_delete=models.CASCADE`
+- This means that if the author is deleted, the book would also be deleted
+- Use `RESTRICT` or `PROTECT` to avoid the author being deleted while it is referenced by any book
+- Alternatively, use `SET_NULL` to set the book's author to `Null` if the author record is deleted
+- The `__str__()` method represents a Book record by its title field
+- The `get_absolute_url()` method provides a URL to access a detailed record
 
 ## BookInstance model
 
