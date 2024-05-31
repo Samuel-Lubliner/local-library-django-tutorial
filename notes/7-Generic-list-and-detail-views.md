@@ -50,7 +50,7 @@ urlpatterns = [
 
 I am going to diverge from the tutorial for learning purposes and then return to the MDN implementation.
 
-Right now my implementation of `/workspaces/local-library-django-tutorial/locallibrary/catalog/urls.py` looks like this:
+Right now my updated implementation of `/workspaces/local-library-django-tutorial/locallibrary/catalog/urls.py` looks like this:
 
 ```python
 from django.urls import path
@@ -65,3 +65,17 @@ urlpatterns = [
 At this point, if I run `python3 manage.py runserver`, I get an error message in the server log:
 
 `catalog.views has no attribute book_list`
+
+## Function-based book list view and template
+
+Coming from a Rails background I am going to first write a function-based view, similar to a Rails controller action. 
+
+Later, I will bridge the gap from Rails function-based views to Django class-based views.
+
+Implement the book_list function-based view in the `catalog/views.py` file.
+
+Create a template to render the view
+Visit the live app preview.
+
+The “/catalog/books” page shows a list of available book titles and author.
+
