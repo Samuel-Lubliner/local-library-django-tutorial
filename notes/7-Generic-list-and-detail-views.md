@@ -79,3 +79,42 @@ Visit the live app preview.
 
 The “/catalog/books” page shows a list of available book titles and author.
 
+## View (class-based)
+
+Now I am returning to the MDN article
+
+One option is to write the book list view as a regular function
+- queries the database for all books
+- then call render() to pass the list to a specified template
+
+Instead I am using a class-based generic list view (ListView)
+
+— Inherits from an existing view
+- The generic view already implements most of the functionality
+- Django best-practices
+    - More robust list view
+    - with less code
+    - less repetition
+    - less maintenance
+
+In `catalog/views.py` the generic view 
+- Queries the database 
+- Renders a template 
+ 
+The template can access the list of books with a template variable.
+
+Generic views look for templates in `/application_name/the_model_name_list.html` inside the application's `/application_name/templates/` directory.
+
+Add attributes to change the default behavior
+
+- Specify another template file if you need to have multiple views that use this same model
+- Specify a different template variable name 
+- Change/filter the subset of results that are returned
+
+```
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'   # your own name for the list as a template variable
+    queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
+    template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
+```

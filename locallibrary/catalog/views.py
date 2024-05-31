@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.views import generic
 from .models import Book, Author, BookInstance, Genre
+
 
 def index(request):
     """View function for home page of site."""
@@ -32,8 +34,5 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
-def books_list(request):
-    """Books list (index) using function based view"""
-    book_list = Book.objects.all()
-    context = {'book_list': book_list}
-    return render(request, 'book_list.html', context=context)
+class BookListView(generic.ListView):
+    model = Book
