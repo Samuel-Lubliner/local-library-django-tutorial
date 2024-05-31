@@ -35,3 +35,33 @@ The view function:
 - Is implemented as a class, `BookListView`.
 - Inherits from Django's generic class-based views.
 - Is converted to a view function using the `as_view()` method.
+
+The tutorial implementation of `/workspaces/local-library-django-tutorial/locallibrary/catalog/urls.py` looks like this:
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('books/', views.BookListView.as_view(), name='books'),
+]
+```
+
+I am going to diverge from the tutorial for learning purposes and then return to the MDN implementation.
+
+Right now my implementation of `/workspaces/local-library-django-tutorial/locallibrary/catalog/urls.py` looks like this:
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("books/", views.books_list, name="books"),
+]
+```
+
+At this point, if I run `python3 manage.py runserver`, I get an error message in the server log:
+
+`catalog.views has no attribute book_list`
