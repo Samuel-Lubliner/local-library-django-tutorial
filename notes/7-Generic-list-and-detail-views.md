@@ -118,3 +118,78 @@ class BookListView(generic.ListView):
     queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
     template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
 ```
+
+# Overriding methods in class-based views
+
+- It is possible to override some of the class methods.
+- More flexible than just setting the queryset attribute
+- No real benefit in this case
+
+- Possible to override `get_context_data()`
+- Pass additional context variables to the template
+
+Follow this pattern
+
+- Get the existing context from the superclass.
+- Add new context information.
+- Return the new context.
+
+See [Built-in class-based generic views Django docs](https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/)
+
+## Creating the List View template
+
+``/django-locallibrary-tutorial/catalog/templates/catalog/book_list.html`
+
+- This is the default template file
+- Expected by the generic class-based list view
+- For a Book model in a catalog application
+- Extend the base template
+
+## Conditional execution
+
+Template tags check whether the book_list has been defined and is not empty.
+
+For more information about conditional operators see: [Django Docs](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#if)
+
+## For loops
+
+The template uses template tags to loop and populate the book template variable.
+
+## Accessing variables
+
+- Access the fields using dot notation
+- `book.field_name`
+
+# Call functions in the model from within template
+
+ - `Book.get_absolute_url()` gets a URL to display the associated detail record.
+- Note: There is no way to pass arguments
+- Warning: Be aware of side effects when calling functions in templates. Be sure not to accidentally do something destructive.
+
+## Update the base template
+
+`/django-locallibrary-tutorial/catalog/templates/base_generic.html`
+
+`{% url 'books' %}` enables the link in all pages.
+
+The URL map for the book detail pages is needed to create hyperlinks to individual books.
+
+## Book detail page
+
+The book detail page displays information accessed using the URL `catalog/book/<id>`
+
+## URL mapping
+
+`/catalog/urls.py` 
+
+The 'book-detail' path function defines a pattern, associated generic class-based detail view, and a name.
+
+'<int:pk>' captures the book id
+
+`pk` is short for primary key to store the book uniquely in the database.
+
+## Passing additional options in your URL maps
+
+You may pass a dictionary containing additional options to the view.
+
+## View (class-based)
