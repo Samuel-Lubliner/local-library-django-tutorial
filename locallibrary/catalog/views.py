@@ -38,6 +38,7 @@ class BookListView(generic.ListView):
     """Class Based View for books"""
     model = Book
     context_object_name = "books"
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
