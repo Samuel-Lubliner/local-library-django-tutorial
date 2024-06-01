@@ -5,7 +5,7 @@ From learn.firstdraft and [MDN Django Generic Views](https://developer.mozilla.o
 ## Overview
 
 - Use generic class-based list views for listing multiple records, and detail views for displaying individual records.
-- Extract information from URL patterns and pass it to the view using pattern matching with regular expressions.
+- Extract information from URL patterns and pass it to the view.
 - These views reduce the amount of view code needed, streamlining the development process.
 - Implement pagination in list views to efficiently handle large datasets.
 - Apply these concepts to create pages to view our books and authors, passing data from URLs to the views.
@@ -28,75 +28,53 @@ The `path()` function:
 - Provides a name for this particular URL mapping.
 
 The view function:
-- Is implemented in a different format.
 - Is implemented as a class, `BookListView`.
 - Inherits from Django's generic class-based views.
 - Is converted to a view function using the `as_view()` method.
 
 ## View (class-based)
 
-One option is to write the book list view as a regular function
+Instead of writing the book list view as a regular function-based view (similar to a Rails controller action):
+- Queries the database for all books.
+- Calls `render()` to pass the list to a specified template.
 
-- Function-based view are similar to a Rails controller action.
-- queries the database for all books
-- then call render() to pass the list to a specified template
+Using a class-based generic list view (ListView) is preferable:
+- Inherits from an existing view.
+- The generic view already implements most of the functionality.
+- Aligns with Django best practices for a more robust list view with less code, repetition, and maintenance.
 
-Instead I am using a class-based generic list view (ListView)
+In `catalog/views.py`, the generic view:
+- Queries the database.
+- Renders a template.
 
-— Inherits from an existing view
-- The generic view already implements most of the functionality
-- Django best-practices
-    - More robust list view
-    - with less code
-    - less repetition
-    - less maintenance
+The template can access the list of books using a template variable. By default, generic views look for templates in the `/application_name/templates/application_name/the_model_name_list.html` path.
 
-In `catalog/views.py` the generic view 
+To modify the default behavior:
+- Specify a different template file if you need to use multiple views for the same model.
+- Use a different template variable name if needed.
+- Customize the queryset to filter or change the subset of results returned.
 
-- Queries the database 
-- Renders a template 
- 
-The template can access the list of books with a template variable.
+## Overriding methods in class-based views
 
-Generic views look for templates in `/application_name/the_model_name_list.html` inside the application's `/application_name/templates/` directory.
+- It is possible to override some of the class methods, offering more flexibility than just setting the queryset attribute.
+- For instance, override `get_context_data()` to pass additional context variables to the template.
 
-Add attributes to change the default behavior
-
-- Specify another template file if you need to have multiple views that use this same model
-- Specify a different template variable name 
-- Change/filter the subset of results that are returned
-
-# Overriding methods in class-based views
-
-- It is possible to override some of the class methods.
-- More flexible than just setting the queryset attribute
-- No real benefit in this case
-
-- Possible to override `get_context_data()`
-- Pass additional context variables to the template
-
-Follow this pattern
-
+Follow this pattern:
 - Get the existing context from the superclass.
 - Add new context information.
 - Return the new context.
 
-See [Built-in class-based generic views Django docs](https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/)
+See [Built-in class-based generic views Django docs](https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/).
 
-## Creating the List View template
+## Creating the List View Template
 
-``/django-locallibrary-tutorial/catalog/templates/catalog/book_list.html`
-
-- This is the default template file
-- Expected by the generic class-based list view
-- For a Book model in a catalog application
-- Extend the base template
+The generic class-based list view for a Book model in a catalog application expects the template file to be located at `/django-locallibrary-tutorial/catalog/templates/catalog/book_list.html`. This template should extend the base template.
 
 ## Conditional execution
 
-Template tags check whether the book_list has been defined and is not empty.
+Template tags check whether `book_list` has been defined and is not empty.
 
-For more information about conditional operators see: [Django Docs](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#if)
+For more information about conditional operators, see: [Django Docs](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#if).
 
 ## For loops
 
@@ -104,36 +82,25 @@ The template uses template tags to loop and populate the book template variable.
 
 ## Accessing variables
 
-- Access the fields using dot notation
-- `book.field_name`
+- Access the fields using dot notation: `book.field_name`.
 
-# Call functions in the model from within template
+## Call functions in the model from within template
 
 - `Book.get_absolute_url()` gets a URL to display the associated detail record.
-- Note: There is no way to pass arguments
+- Note: There is no way to pass arguments.
 - Warning: Be aware of side effects when calling functions in templates. Be sure not to accidentally do something destructive.
 
-## Update the base template
+## Update the Base Template
 
-`/django-locallibrary-tutorial/catalog/templates/base_generic.html`
-
-`{% url 'books' %}` enables the link in all pages.
-
-The URL map for the book detail pages is needed to create hyperlinks to individual books.
+To enable the link on all pages, update `/django-locallibrary-tutorial/catalog/templates/base_generic.html` to use `{% url 'books' %}`. The URL mapping for the book detail pages is needed to create hyperlinks to individual books.
 
 ## Book detail page
 
-The book detail page displays information accessed using the URL `catalog/book/<id>`
+The book detail page displays information accessed using the URL `catalog/book/<id>`.
 
-## URL mapping
+## URL Mapping
 
-`/catalog/urls.py` 
-
-The 'book-detail' path function defines a pattern, associated generic class-based detail view, and a name.
-
-'<int:pk>' captures the book id
-
-`pk` is short for primary key to store the book uniquely in the database.
+In `/catalog/urls.py`, the 'book-detail' path function defines a URL pattern, associates it with a generic class-based detail view, and assigns it a name. The `<int:pk>` part captures the book ID, where `pk` stands for primary key, uniquely identifying the book in the database.
 
 ## Passing additional options in your URL maps
 
@@ -141,96 +108,83 @@ You may pass a dictionary containing additional options to the view.
 
 ## View (class-based)
 
-`catalog/views.py`
+In `catalog/views.py`:
 
-```PYTHON
-Copy to Clipboard
+***python
 class BookDetailView(generic.DetailView):
     model = Book
-```
+***
 
-- Now create `/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html`
-- The view will pass information for the Book record
-- Access the book's details with
-  - the template variable named object
-  - OR book ("the_model_name")
+- Create the template at `/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html`
+- The view will pass the Book record's information to the template.
+- Access the book's details in the template using the variable named `object` or `book` (the model's name).
 
-## What happens if the record doesn't exist?
+## If the record doesn't exist ...
 
-- The generic class-based detail view will raise an Http404 exception
-- resource not found
-- can be customized
+- Generic class-based detail view raises an exception
+- Http404
+- Resource not found
+- This behavior can be customized
 
-## Creating the Detail View template
+## Creating the Detail View Template
 
-`/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html`
+For a Book model in an catalog application, the generic class-based detail view expects the template file to be located at `/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html`.
 
-- Default template file name expected by the generic class-based detail view 
-- Model named Book in an application named catalog
+To create this template:
+- The `url` template tag can reverse the 'author-detail' URL and pass it the author instance for the book. Using `get_absolute_url()` is preferred because any necessary changes need to be made only in the author model.
 
-- The url template tag reverses the 'author-detail' URL (defined in the URL mapper)
-- passing it the author instance for the book:
+The template should:
+- Extend the base template
+- Override the content block.
+- Use conditional processing and for loops to iterate through lists of objects.
+- Access the context fields using dot notation.
 
-`get_absolute_url()` is preferred because  changes only need to be done in the author model.
+Retrieve the set of `BookInstance` records associated with a particular Book, with the `book.bookinstance_set.all()` function.
 
-The template
+Django constructs the function
+- by lower-casing the ForeignKey model
+- followed by `_set`
+- Use `all()` to get all records
 
-- extend our base template and override the "content" block.
-- Conditional processing
-- For loops to loop through lists of objects
-- Access the context fields using the dot notation
+You cannot use the `filter()` method directly in templates because you cannot specify arguments to functions.
 
-The function `book.bookinstance_set.all()` is constructed by Django to return the set of `BookInstance` records associated with a particular Book.
+If you don't define an order (on your class-based view or model), there will be errors:
 
-The name of the function is constructed by
-
-- lower-casing the model name where the ForeignKey was declared
-- followed by _set
-
-- Here we use all() to get all records
-- Can't use the filter() method directly in templates because you can't specify arguments to functions.
-
-- If you don't define an order (on your class-based view or model), there will be errors
-
-```bash
+***bash
 [29/May/2017 18:37:53] "GET /catalog/books/?page=1 HTTP/1.1" 200 1637
 /foo/local_library/venv/lib/python3.5/site-packages/django/views/generic/list.py:99: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <QuerySet [<Author: Ortiz, David>, <Author: H. McRaven, William>, <Author: Leigh, Melinda>]>
   allow_empty_first_page=allow_empty_first_page, **kwargs)
-  ```
+***
 
-The paginator object expects an ORDER BY being executed on your underlying database.
+The paginator object expects an `ORDER BY` clause executed on your underlying database.
 
 ## Pagination
 
-- Django has excellent inbuilt support for pagination.
-- Built into the generic class-based list views so you don't have to do very much to enable it!
+- Django has built-in support for pagination
+- Incorporated into the generic class-based list views
 
 ## Templates
 
-With the data is paginated, add support to the template to scroll through the results set. To paginate all list views, add this to the base template.
+With paginated data, add support to the template to scroll through the results set. To paginate all list views, add this to the base template. The `page_obj` gets all the information about the current page, previous pages, page numbers, etc.
 
-The page_obj gets all the information about the current page, previous pages, pages numbers, etc
-
-`{{ request.path }}`
-- Get the current page URL for creating the pagination links.
-- Independent of the object that we're paginating.
+`{{ request.path }}` gets the current page URL for creating the pagination links, independent of the object that we're paginating.
 
 ## Book List Page
 
 Create the author detail and list views.
 
-catalog/authors/ — The list of all authors.
-catalog/author/<id> — The detail view for the specific author with a primary key field named <id>
+Author list: `catalog/authors/`
+Detail view for the author with a primary key field: `catalog/author/<id>`
 
-After creating the URL mapper for the author list page, update the All authors link in the base template.
-After creating the URL mapper for the author detail page, update the book detail view template (/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html) so that the author link points to the new author detail page
-
-Call `get_absolute_url()` on the author model as shown below.
+- After creating the URL mapper for the author list page, update the "All authors" link in the base template.
+- After creating the URL mapper for the author detail page, update the book detail view template so the author link points to the new author detail page.
+- Call `get_absolute_url()` on the author model.
 
 ## See also
-Built-in class-based generic views (Django docs)
-Generic display views (Django docs)
-Introduction to class-based views (Django docs)
-Built-in template tags and filters (Django docs)
-Pagination (Django docs)
-Making queries > Related objects (Django docs)
+
+- [Built-in class-based generic views](https://docs.djangoproject.com/en/5.0/topics/class-based-views/generic-display/)
+- [Generic display views](https://docs.djangoproject.com/en/5.0/ref/class-based-views/generic-display/)
+- [Introduction to class-based views](https://docs.djangoproject.com/en/5.0/topics/class-based-views/intro/)
+- [Built-in template tags and filters](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/)
+- [Pagination](https://docs.djangoproject.com/en/5.0/topics/pagination/)
+- [Making queries > Related objects](https://docs.djangoproject.com/en/5.0/topics/db/queries/#related-objects)
