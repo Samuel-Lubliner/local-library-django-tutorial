@@ -258,3 +258,10 @@ Create `/django-locallibrary-tutorial/templates/registration/login.html`
 This template extends the base template and overrides the content block.
 
 Navigate to `http://127.0.0.1:8000/accounts/login/`.
+
+Log in and get redirected to `http://127.0.0.1:8000/accounts/profile/`
+
+Django expects that the user want to be taken to a profile page. Right now this page is not defined yet so there is another error.
+
+In `/django-locallibrary-tutorial/locallibrary/settings.py` redirect to the site homepage.
+
