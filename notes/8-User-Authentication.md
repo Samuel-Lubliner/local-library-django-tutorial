@@ -257,6 +257,11 @@ Create `/django-locallibrary-tutorial/templates/registration/login.html`
 
 This template extends the base template and overrides the content block.
 
+
+`{% csrf_token %}`  is a template helper.
+
+A form object is available in the form and can point to the associated model (User model). Use `form.username.label_tag` and `form.username` to generate HTML label and input elements.
+
 Navigate to `http://127.0.0.1:8000/accounts/login/`.
 
 Log in and get redirected to `http://127.0.0.1:8000/accounts/profile/`
@@ -265,3 +270,8 @@ Django expects that the user want to be taken to a profile page. Right now this 
 
 In `/django-locallibrary-tutorial/locallibrary/settings.py` redirect to the site homepage.
 
+## Logout template
+
+Note: Django 5 does not allow logout using GET, only POST.
+
+Create `/django-locallibrary-tutorial/templates/registration/logged_out.html`.
