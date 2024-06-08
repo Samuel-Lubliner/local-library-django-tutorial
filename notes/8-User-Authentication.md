@@ -290,3 +290,31 @@ Note: In Django 5 to logout you must POST to the `admin:logout` URL, using a for
 For function-based views, the `login_required` decorator is the easiest way to restrict.
 
 For class-based views, derive from `LoginRequiredMixin` to restrict access. Declare this mixin first in the superclass list, before the main view class.
+
+## Mixins and decorators
+
+Mixin
+
+- multiple inheritance for classes
+- Functionality to be combined with other classes
+- Extend the behavior of classes with reusable components
+- DRY
+
+Decorators
+
+- Wrap a function with additional functionality
+- Modify behavior without altering the code of the function being decorated
+- Used for a variety of purposes including `@login_required`, `@permission_required`
+
+## Listing the current user's books
+
+Before creating the book list, first extend the `BookInstance` model to support borrowing and use Django Admin to loan a number of books to a user.
+
+## Models
+
+- Make it possible for users to have a `BookInstance` on loan.
+- Already have a `status` and `due_back` date
+- Create an association between the model and a user using a ForeignKey (one-to-many) field
+- In `catalog/models.py` import the settings from `django.conf`.
+- Add the borrower field to `BookInstance` model
+- Add a property that to call from templates to tell if a particular book instance is overdue.
