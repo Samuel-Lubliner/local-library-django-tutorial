@@ -275,3 +275,12 @@ In `/django-locallibrary-tutorial/locallibrary/settings.py` redirect to the site
 Note: Django 5 does not allow logout using GET, only POST.
 
 Create `/django-locallibrary-tutorial/templates/registration/logged_out.html`.
+
+## Testing in templates
+
+- Get information about the logged in user in templates with the template variable `{{ user }}`
+- Determine whether the user is eligible to see specific content with {{ user.is_authenticated }}
+
+In `/django-locallibrary-tutorial/catalog/templates/base_generic.html`, update the sidebar to display a login or logout link depending on the users status.
+
+Note: In Django 5 to logout you must POST to the `admin:logout` URL, using a form with a button.
