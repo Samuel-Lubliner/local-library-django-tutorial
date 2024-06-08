@@ -284,3 +284,9 @@ Create `/django-locallibrary-tutorial/templates/registration/logged_out.html`.
 In `/django-locallibrary-tutorial/catalog/templates/base_generic.html`, update the sidebar to display a login or logout link depending on the users status.
 
 Note: In Django 5 to logout you must POST to the `admin:logout` URL, using a form with a button.
+
+## Testing in views
+
+For function-based views, the `login_required` decorator is the easiest way to restrict.
+
+For class-based views, derive from `LoginRequiredMixin` to restrict access. Declare this mixin first in the superclass list, before the main view class.
