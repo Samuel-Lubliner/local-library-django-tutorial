@@ -317,4 +317,42 @@ Before creating the book list, first extend the `BookInstance` model to support 
 - Create an association between the model and a user using a ForeignKey (one-to-many) field
 - In `catalog/models.py` import the settings from `django.conf`.
 - Add the borrower field to `BookInstance` model
-- Add a property that to call from templates to tell if a particular book instance is overdue.
+- Add a property that to call from templates to tell if a particular book instance is overdue. Read more about [properties](https://docs.python.org/3/library/functions.html#property)
+- Read more about [custom user models](https://docs.djangoproject.com/en/5.0/topics/auth/customizing/)
+- Importing the model like this improves maintainability
+- Be sure to migrate updated models
+
+## Admin
+
+- Make the `borrower` field visible in Admin section to assign a `User` to a `BookInstance`
+- In `catalog/admin.py` add `borrower` to the `BookInstanceAdmin` class in the `list_display` and the `fieldsets`
+
+## On loan view
+
+- Add a view for getting the list of books loaned to the current user
+- Use a generic class-based list view
+- Import and derive from `LoginRequiredMixin`
+- Declare a `template_name` instead of using the default
+
+- In `catalog/views.py` restrict the query to just `BookInstance` objects for the current user
+- Re-implement `get_queryset()`
+- Order by `due_back` date to display oldest items first
+
+## URL conf for on loan books
+
+In `/catalog/urls.py` add a `path()` pointing to the view.
+
+## Add template for on-loan books
+
+Create `/catalog/templates/catalog/bookinstance_list_borrowed_user.html`. In this template file we use the method in the model to change the color of overdue items
+
+# Add the list to the sidebar
+
+- In the base template `/django-locallibrary-tutorial/catalog/templates/base_generic.html` add `My Borrowed` to the sidebar
+- When a user is logged in, they see the `My Borrowed` link in the sidebar and the list of books
+
+See the Django docs
+
+[User authentication in Django](https://docs.djangoproject.com/en/5.0/topics/auth/)
+[Using the (default) Django authentication system](https://docs.djangoproject.com/en/5.0/topics/auth/default/)
+[Introduction to class-based views > Decorating class-based views](https://docs.djangoproject.com/en/5.0/topics/class-based-views/intro/#decorating-class-based-views)
