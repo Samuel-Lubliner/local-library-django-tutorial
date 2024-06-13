@@ -48,3 +48,17 @@ URL, Form, View, and then Template
 - Access `field.errors` and show them in a conditional within the form
 
 - Validations are defined directly in the Book model
+
+## Refactor form
+
+- The form object
+- was passed to the template in the context dictionary
+- is an instance of the `BookForm` class, 
+  - inherits from `models.ModelForm` and references the `Book` model
+
+- Leave off the form action
+- Can also just write `{{ form.as_p }}` to render all of our inputs, labels, help text, and validation messages, in paragraph tags
+
+- Modify the `book_create` view logic so the book form redirects to the new book’s detail page after a successful book creation
+
+
