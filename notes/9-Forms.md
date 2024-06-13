@@ -22,3 +22,29 @@ Define a new form class
 - Write a function-based view for the create view logic.
 - The `form` object is an instance of the `BookForm`, which itself references the `Book` model.
 - Pass the `form` object to the template using the context object
+
+## Template
+
+URL, Form, View, and then Template
+
+- Created a `<form>`
+- Set an action `{% url 'book-create %}` which evaluates to `/catalog/book/create`
+- Give it the post method
+
+- Add `{% csrf_token %}`
+- Must be done manually for all forms in Django
+
+- Passed in the form context object from view logic
+- Iterate with `{% for field in form %}`
+
+- The form object, and each field in it, has full access to the `Book` model
+- Supplied the `BookForm` in `forms.py` was created
+
+- For every field objects, call `field.label_tag`
+- Then field to render the HTML label and input
+
+- Access the model’s `help_text` with `field.help_text` in a conditional within the form
+
+- Access `field.errors` and show them in a conditional within the form
+
+- Validations are defined directly in the Book model

@@ -1,0 +1,23 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Add New Book</h2>
+  <form action="{% url 'book-create' %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div>
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    {{ field.help_text|safe }}
+                {% endif %}
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </p>
+        </div>
+    {% endfor %}
+    <button btn="btn" class="btn btn-primary" type="submit">Save</button>
+  </form>
+{% endblock %}
