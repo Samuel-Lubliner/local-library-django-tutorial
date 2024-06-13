@@ -16,3 +16,9 @@ Define a new form class
 
 - Inheriting from `forms.ModelForm`
 - Override the `Meta` class to supply it with a model and fields for the form
+
+## View
+
+- Write a function-based view for the create view logic.
+- The `form` object is an instance of the `BookForm`, which itself references the `Book` model.
+- Pass the `form` object to the template using the context object
