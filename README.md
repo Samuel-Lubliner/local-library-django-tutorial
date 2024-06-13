@@ -12,3 +12,4 @@ This is a companion repository to [Mozilla's Django Tutorial](https://developer.
 - [Homepage](notes/6-Homepage.md)
 - [Generic List and Detail Views](notes/7-Generic-list-and-detail-views.md)
 - [User Authentication](notes/8-User-Authentication.md)
+- [Working with Forms](notes/9-Forms.md)
