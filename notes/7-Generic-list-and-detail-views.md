@@ -110,10 +110,10 @@ You may pass a dictionary containing additional options to the view.
 
 In `catalog/views.py`:
 
-***python
+```python
 class BookDetailView(generic.DetailView):
     model = Book
-***
+```
 
 - Create the template at `/django-locallibrary-tutorial/catalog/templates/catalog/book_detail.html`
 - The view will pass the Book record's information to the template.
@@ -150,11 +150,11 @@ You cannot use the `filter()` method directly in templates because you cannot sp
 
 If you don't define an order (on your class-based view or model), there will be errors:
 
-***bash
-[29/May/2017 18:37:53] "GET /catalog/books/?page=1 HTTP/1.1" 200 1637
-/foo/local_library/venv/lib/python3.5/site-packages/django/views/generic/list.py:99: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <QuerySet [<Author: Ortiz, David>, <Author: H. McRaven, William>, <Author: Leigh, Melinda>]>
+```bash
+[date-time] "GET /catalog/books/?page=1 HTTP/1.1" 200 1637
+/foo/local_library/venv/lib/python3.5/site-packages/django/views/generic/list.py:99: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <QuerySet [<Author: Lubiner, Samuel>, <Author: Van Rossum, Guido>, <Author: Torvalds, Linus>]>
   allow_empty_first_page=allow_empty_first_page, **kwargs)
-***
+```
 
 The paginator object expects an `ORDER BY` clause executed on your underlying database.
 
