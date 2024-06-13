@@ -55,11 +55,11 @@ def book_create(request):
     if request.method == "POST":
         form = BookForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("books")
+            book = form.save()
+            return redirect("book-detail", pk=book.pk)
     else:
         form = BookForm()
-
+    
     context = {"form": form}
 
     return render(request, "catalog/book_form.html", context=context)
