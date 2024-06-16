@@ -74,3 +74,24 @@ URL, Form, View, and then Template
 - Get the book from the dynamic path segment `<int:pk>` in a new function-based view
 - Redirect to the list of books at the end of the logic
 - Create a post form on the book detail template to give user the delete link.
+
+## Refactor everything with class-based views
+
+- In Django class-based views are more popular than function-based views
+- Delete `forms.py`
+- Create a confirmation template for book deletion
+- Remove the form for book deletion
+- Chang the views and URLs to use built in `generic.CreateView`, `generic.UpdateView`, and `generic.DeleteView` classes
+
+Built in class-based views
+
+- Know that you want a form for Book (`model=Book`)
+- Expect that you have a template called `book_form.html`
+- Provide fields to tell it how to build the form, and handle the processing and redirects after the actions are taken
+
+Writing CRUD routes
+
+- Django does not handle DELETE and PUT/PATCH HTTP requests in forms
+- HTML forms only support GET and POST methods
+- Django expects the POST method for form submissions
+- Handle the intended action (update or delete) in view logic
