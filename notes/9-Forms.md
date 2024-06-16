@@ -68,4 +68,9 @@ URL, Form, View, and then Template
 - Django is receiving an existing book object with `book = Book`objects.get(pk=pk) in the view logic
 - The form will automatically pre-populate with the existing data for that book record
 
+## Book delete
 
+- Define a route (URL)
+- Get the book from the dynamic path segment `<int:pk>` in a new function-based view
+- Redirect to the list of books at the end of the logic
+- Create a post form on the book detail template to give user the delete link.
