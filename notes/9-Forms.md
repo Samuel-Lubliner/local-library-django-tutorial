@@ -95,3 +95,9 @@ Writing CRUD routes
 - HTML forms only support GET and POST methods
 - Django expects the POST method for form submissions
 - Handle the intended action (update or delete) in view logic
+
+## Permissions
+
+- Define permissions on the model "class Meta" section
+- Specify permissions in a tuple
+
