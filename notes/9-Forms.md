@@ -61,4 +61,11 @@ URL, Form, View, and then Template
 
 - Modify the `book_create` view logic so the book form redirects to the new book’s detail page after a successful book creation
 
+## Book update
+
+- Re-use the BookForm class new View and render the same template
+- The BookForm can be passed an existing book with the argument `instance=book`
+- Django is receiving an existing book object with `book = Book`objects.get(pk=pk) in the view logic
+- The form will automatically pre-populate with the existing data for that book record
+
 
