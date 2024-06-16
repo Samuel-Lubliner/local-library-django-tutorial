@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Book, Author, BookInstance, Genre
@@ -49,6 +50,18 @@ class BookListView(LoginRequiredMixin, generic.ListView):
 
 class BookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Book
+
+class BookCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Book
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+
+class BookUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Book
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+
+class BookDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
 
 class AuthorListView(LoginRequiredMixin, generic.ListView):
     model = Author
